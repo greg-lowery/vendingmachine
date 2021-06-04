@@ -14,6 +14,7 @@ namespace Capstone
         public decimal MachineBalance { get; }
         //this could be managed here or in a separate class
 
+        public void DisplayMenu
 
 
 

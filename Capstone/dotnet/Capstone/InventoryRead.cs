@@ -8,7 +8,7 @@ namespace Capstone
     {
 
          
-        //this will read from the inventory file and let us instantiate an item base on that particular line of vendingmachine.csv
+        //this will read from the inventory file and let us instantiate an item base on that particular line of the file read for the vendingmachine.csv
 
         public Dictionary<string, VendingMachineItem> ReadFile(string whereToRead)
         {
@@ -21,17 +21,16 @@ namespace Capstone
                     {
 
                         string line = sr.ReadLine();
-
+                        //seperate items into array to be read
                         string[] separatedItem = line.Split("|");
 
+                        string itemCode = separatedItem[0].ToString();
 
-                             string itemCode = separatedItem[0].ToString();
+                        string itemName = separatedItem[1].ToString();
 
-                            string itemName = separatedItem[1].ToString();
+                        decimal itemCost = decimal.Parse(separatedItem[2].ToString());
 
-                            decimal itemCost = decimal.Parse(separatedItem[2].ToString());
-
-                            string itemCategory = separatedItem[3].ToString();
+                        string itemCategory = separatedItem[3].ToString();
 
 
                         VendingMachineItem vendingMachineItem = new VendingMachineItem(itemName, itemCost, itemCode, itemCategory);
