@@ -4,7 +4,7 @@ using System.IO;
 
 namespace Capstone
 {
-    class InventoryRead
+    class InventoryRead 
     {
 
          
@@ -32,8 +32,9 @@ namespace Capstone
 
                         string itemCategory = separatedItem[3].ToString();
 
+                        int itemQuantity = 5;
 
-                        VendingMachineItem vendingMachineItem = new VendingMachineItem(itemName, itemCost, itemCode, itemCategory);
+                        VendingMachineItem vendingMachineItem = new VendingMachineItem(itemName, itemCost, itemCode, itemCategory, itemQuantity);
 
                         vendingMachineDictionary[itemCode] = vendingMachineItem;
 

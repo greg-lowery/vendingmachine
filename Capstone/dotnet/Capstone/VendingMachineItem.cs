@@ -15,16 +15,16 @@ namespace Capstone
 
         public string ItemCategory { get; private set; }
 
-        public int ItemQuantity { get; private set; } = 5;
+        public int ItemQuantity { get; set; } = 5;
 
 
-        public VendingMachineItem(string itemName, decimal itemCost, string itemCode, string itemCategory)
+        public VendingMachineItem(string itemName, decimal itemCost, string itemCode, string itemCategory, int itemQuantity)
         {
             ItemName = itemName;
             ItemCost = itemCost;
             ItemCode = itemCode;
             ItemCategory = itemCategory;
-
+            ItemQuantity = itemQuantity;
         }
 
 
