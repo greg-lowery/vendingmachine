@@ -40,6 +40,10 @@ namespace Capstone
 
                     }
             }
+            catch (FileNotFoundException e)
+            {
+                Console.WriteLine("File not found!" + e.Message);
+            }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);

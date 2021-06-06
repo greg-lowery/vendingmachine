@@ -15,6 +15,8 @@ namespace Capstone
         //instantiate log writing method 
         FileLogWriter fileLogWriter = new FileLogWriter();
 
+        string timeStamp = DateTime.Now.ToString();
+
         //constructor method for an instance of a VendingMachine
         public VendingMachine()
         {
@@ -37,7 +39,7 @@ namespace Capstone
         {
             foreach (KeyValuePair<string, VendingMachineItem> item in VendingMachineDictionary)
             {
-                Console.WriteLine($"{item.Key} - {item.Value.ItemName} - {item.Value.ItemCost} - {item.Value.ItemQuantity} remaining");
+                Console.WriteLine($"{item.Key} - {item.Value.ItemName} - {item.Value.ItemCost:c2} - {item.Value.ItemQuantity} remaining");
             }
         }
 
@@ -52,36 +54,39 @@ namespace Capstone
                 Console.WriteLine("(1) Display Vending Machine Items \n(2) Purchase \n(3) Exit");
                 mainMenuSelection = Console.ReadLine();
 
-
+                //menu selection to display inventory to user 
                 if (mainMenuSelection == "1")
                 {
                     DisplayAvaliableInvetory();
                     Console.Write("\n Press any key to return to main menu: ");
                     Console.ReadLine();
                 }
-
+                //menu selection to take user to purchasing menu
                 if (mainMenuSelection == "2")
                 {
                     PurchaseMenu();
                 }
-
+                //menu selection to leave program
                 if (mainMenuSelection == "3")
                 {
                     break;
                 }
+
+                //TODO: PRINT SALES REPORT
+                //if (mainMenuSelection = 4)
 
             } while (mainMenuSelection != "3");
         }
 
         public void PurchaseMenu()
         {
-
+            //set to true to exit to main menu
             bool exitMenu = false;
 
             while (exitMenu == false)
             {
                 Console.WriteLine("\n(1) Feed Money \n(2) Select Product \n(3) Finish Transaction");
-                Console.WriteLine($"\nCurrent Money Provided: {MachineBalance}");
+                Console.WriteLine($"\nCurrent Money Provided: {MachineBalance:c2}");
                 string purchaseMenuSelection = Console.ReadLine();
 
                 //add money to bank selection
@@ -110,10 +115,17 @@ namespace Capstone
         {
             //prompt user for whole dollar amount, then update current machine balance
             Console.Write("\nPlease enter the whole dollar amount you would like to deposit: ");
-            MachineBalance += decimal.Parse(Console.ReadLine());
+
+            //accept money from user 
+            decimal depositAmount = decimal.Parse(Console.ReadLine());
+            //add deposited amount to machine balance
+            MachineBalance += depositAmount;
+
             //TODO: LOG ENTERED MONEY
-            //string whatToWrite = "Hello World!";
-            //fileLogWriter.WriteLogMessage(whatToWrite);
+
+            //write to file log for machine 
+            string logFeedMoney = $"{timeStamp} FEED MONEY: {depositAmount:c2} {MachineBalance:c2}";
+            fileLogWriter.WriteLogMessage(logFeedMoney);
         }
         public void DispenseItem()
         {
@@ -128,6 +140,7 @@ namespace Capstone
                 VendingMachineItem item = VendingMachineDictionary[selectedItemCode];
                 if (item.ItemQuantity >= 1)
                 {
+                    decimal currentMachineBalance = MachineBalance;
                     //update machine balance after purchasing item
                     MachineBalance -= item.ItemCost;
 
@@ -151,12 +164,14 @@ namespace Capstone
                     }
 
                     //print reciept to user
-                    Console.WriteLine($"\nYou selected: {item.ItemName} \nCost of item: {item.ItemCost} \nYour remaining balance: {MachineBalance}  \n{slogan}");
+                    Console.WriteLine($"\nYou selected: {item.ItemName} \nCost of item: {item.ItemCost:c2} \nYour remaining balance: {MachineBalance:c2}  \n{slogan}");
 
                     //update item inventory by subtracting selected item from group
                     item.ItemQuantity--;
 
                     //WRITE TO THE LOG
+                    string logItemPurchased = $"{timeStamp} {item.ItemName} {item.ItemCode} {currentMachineBalance:c2} {MachineBalance:c2}";
+                    fileLogWriter.WriteLogMessage(logItemPurchased);
                 }
                 else
                 {
@@ -170,7 +185,8 @@ namespace Capstone
         }
         public void FinishTransaction()
         {
-            //TODO: break into method:  return customer change in largest coins possible and print change amount to console 
+            decimal currentMachineBalance = MachineBalance;
+            //return customer change in largest coins possible and print change amount to console 
             int coinChange = (int)(MachineBalance * 100);
             int quarter = coinChange / 25;
             coinChange %= 25;
@@ -180,12 +196,15 @@ namespace Capstone
             coinChange %= 5;
 
             //write to user change expected in quarters, nickles, dimes
-            Console.WriteLine($"\nAmount of change: {MachineBalance} \nquarters: {quarter} \ndimes: {dime} \nnickels: {nickel}\n");
+            Console.WriteLine($"\nAmount of change: {MachineBalance:c2} \nquarters: {quarter} \ndimes: {dime} \nnickels: {nickel}\n");
 
+            
             //update machine balance to $0
             MachineBalance = 0;
 
-            //TODO: WRITE TO LOG
+            //WRITE TO LOG
+            string logChangeGiven = $"{timeStamp} GIVE CHANGE: {currentMachineBalance:c2} {MachineBalance:c2}";
+            fileLogWriter.WriteLogMessage(logChangeGiven);
         }
     }
 }

@@ -17,7 +17,7 @@ namespace Capstone
         {
             try
             {
-                using (StreamWriter sw = new StreamWriter(whereToWrite, false))
+                using (StreamWriter sw = new StreamWriter(whereToWrite, true))
                 {
                     sw.WriteLine(whatToWrite);
                 }
