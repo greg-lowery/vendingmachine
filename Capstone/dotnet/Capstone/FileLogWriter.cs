@@ -19,7 +19,7 @@ namespace Capstone
             {
                 using (StreamWriter sw = new StreamWriter(whereToWrite, false))
                 {
-                    sw.WriteLine();
+                    sw.WriteLine(whatToWrite);
                 }
             }
             catch (FileNotFoundException e)

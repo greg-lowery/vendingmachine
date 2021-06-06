@@ -1,0 +1,47 @@
+CLASSES
+
+vending machine
+	calling new vm
+
+
+inventory
+reads inventory file
+	displays to main menu 1)
+	displays to 2) purchase 2) select product
+
+display (main menu 1)
+	display the inventory log
+
+purchase class and following subclasses
+
+purchase.feedmoney(main menu 2)
+
+purchase.selectproduct(main menu 2)
+
+purchase.finishtransaction(main menu 2)
+
+finish transaction (main menu 3)
+
+
+		PROCESS NOTES 6-4-21
+
+create separate purchaseitem class, specifically option 2) purchase item	
+	check for item method
+	slogans method
+	
+main menu option 3) finish transaction; create separate method for making change 
+
+flesh out WriteLogMessage inside of FileLogWriter.cs
+	that needs to be called three places; see diagram
+
+create at least one unit test for this program
+
+formatting stuff
+	variable names, method names, class names
+	make sure the output looks clean
+	commenting
+	excepting catching in file I/O
+
+
+optional 4th hidden main menu item, Sales Report
+	
