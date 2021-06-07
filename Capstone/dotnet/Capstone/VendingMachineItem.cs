@@ -5,7 +5,7 @@ using System.IO;
 
 namespace Capstone
 {
-    class VendingMachineItem
+    public class VendingMachineItem
     {
         public string ItemName { get; private set; }
 

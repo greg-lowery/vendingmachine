@@ -54,6 +54,11 @@ namespace Capstone
                 Console.WriteLine("(1) Display Vending Machine Items \n(2) Purchase \n(3) Exit");
                 mainMenuSelection = Console.ReadLine();
 
+                if (mainMenuSelection != "1" && mainMenuSelection != "2" && mainMenuSelection != "3")
+                {
+                    Console.WriteLine("\nYou entered an invalid code, please try again!\n");
+                }
+
                 //menu selection to display inventory to user 
                 if (mainMenuSelection == "1")
                 {
@@ -71,7 +76,6 @@ namespace Capstone
                 {
                     break;
                 }
-
                 //TODO: PRINT SALES REPORT
                 //if (mainMenuSelection = 4)
 
@@ -89,6 +93,10 @@ namespace Capstone
                 Console.WriteLine($"\nCurrent Money Provided: {MachineBalance:c2}");
                 string purchaseMenuSelection = Console.ReadLine();
 
+                if (purchaseMenuSelection != "1" && purchaseMenuSelection != "2" && purchaseMenuSelection != "3")
+                {
+                    Console.WriteLine("\nYou entered an invalid code, please try again!\n");
+                }
                 //add money to bank selection
                 if (purchaseMenuSelection == "1")
                 {
@@ -100,7 +108,7 @@ namespace Capstone
                 {
                     DispenseItem();
                 }
-
+               
                 //finish transaction selection
                 if (purchaseMenuSelection == "3")
                 {
@@ -108,6 +116,7 @@ namespace Capstone
                     //return to main menu after finished 
                     exitMenu = true;
                 }
+                
             }
         }
 
