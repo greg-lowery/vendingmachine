@@ -11,7 +11,7 @@ namespace Capstone
         public Dictionary<string, VendingMachineItem> VendingMachineDictionary { get; set; } = new Dictionary<string, VendingMachineItem> { };
 
         //create a machine balance to keep track of money input by user
-        public decimal MachineBalance { get; private set; } = 0;
+        public decimal MachineBalance { get;  private set; } = 0;
 
         //instantiate log writing method 
         FileLogWriter fileLogWriter = new FileLogWriter();

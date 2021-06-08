@@ -25,23 +25,33 @@ finish transaction (main menu 3)
 
 		PROCESS NOTES 6-4-21
 
-create separate purchaseitem class, specifically option 2) purchase item	
-	check for item method
-	slogans method
-	
-main menu option 3) finish transaction; create separate method for making change 
+--**Insufficient funds**
+--**other than whole dollar selection**
 
-flesh out WriteLogMessage inside of FileLogWriter.cs
-	that needs to be called three places; see diagram
-
-create at least one unit test for this program
-
-formatting stuff
+--formatting stuff
 	variable names, method names, class names
 	make sure the output looks clean
 	commenting
-	excepting catching in file I/O
+	exception catching in file I/O
+	make user input case insensitive
+
+--optional 4th hidden main menu item, Sales Report
 
 
-optional 4th hidden main menu item, Sales Report
+--create at least one unit test for this program		DONE
+	since our methods are void, use cw() in the test variables?
+	how to test a void method
+	
+	Return change is probably an easily testable one		DONE
+
+create separate purchaseitem class, specifically option 2) purchase item	DONE
+	check for item method
+	slogans method
+	
+main menu option 3) finish transaction; create separate method for making change 	DONE
+
+flesh out WriteLogMessage inside of FileLogWriter.cs		DONE
+	that needs to be called three places; see diagram
+
+
 	

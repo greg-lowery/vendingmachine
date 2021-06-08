@@ -7,20 +7,24 @@ namespace CapstoneTests
     public class VendingMachineUnitTests
     {
         VendingMachine vendingMachine = new VendingMachine();
-        //[TestMethod]
-        //  public void ValidMainMenuSelectionTest()
-        //{
+        TestMethods testMethods = new TestMethods();
 
-        // string result = vendingMachine.PurchaseMenu("2");
-
-        // Assert.AreEqual(result, "2", "not doing the thing");
-
-        //}
         [TestMethod]
-        public void InvalidMainMenuTest()
+        public void TestFinishTransactionQuarters()
         {
-           // string testMenuSelection = vendingMachine.DisplayMainMenu();
-            //Assert.AreEqual(vendingMachine.)
+            string result = $"\nAmount of change: $2.25 \nquarters: 9 \ndimes: 0 \nnickels: 0\n";
+       
+            decimal currentMachineBalance = 2.25M;
+            Assert.AreEqual(result, TestMethods.FinishTransactionTestMethod(currentMachineBalance));
+        }
+
+        [TestMethod]
+        public void TestFinishTransactionAllDemoninations()
+        {
+            string result = $"\nAmount of change: $6.40 \nquarters: 25 \ndimes: 1 \nnickels: 1\n";
+
+            decimal currentMachineBalance = 6.40M;
+            Assert.AreEqual(result, TestMethods.FinishTransactionTestMethod(currentMachineBalance));
         }
     }
 }
