@@ -5,16 +5,18 @@ using System.IO;
 
 namespace Capstone
 {
-    class VendingMachine
+    public class VendingMachine
     {
         //create VendingMachine properties for a dictionary of items and a monetary balance
         public Dictionary<string, VendingMachineItem> VendingMachineDictionary { get; set; } = new Dictionary<string, VendingMachineItem> { };
 
+        //create a machine balance to keep track of money input by user
         public decimal MachineBalance { get; private set; } = 0;
 
         //instantiate log writing method 
         FileLogWriter fileLogWriter = new FileLogWriter();
 
+        //create a timestamp for log printing
         string timeStamp = DateTime.Now.ToString();
 
         //constructor method for an instance of a VendingMachine
@@ -34,7 +36,7 @@ namespace Capstone
             VendingMachineDictionary = inventoryRead.ReadFile(whereToRead);
         }
 
-        //method for displaying the inventory from the dictionary
+        //method for displaying the inventory from the vending machine dictionary
         public void DisplayAvaliableInvetory()
         {
             foreach (KeyValuePair<string, VendingMachineItem> item in VendingMachineDictionary)
@@ -43,7 +45,7 @@ namespace Capstone
             }
         }
 
-        //main menu of a VendingMachine
+        //main menu display of a VendingMachine
         public void DisplayMainMenu()
         {
 
@@ -54,24 +56,25 @@ namespace Capstone
                 Console.WriteLine("(1) Display Vending Machine Items \n(2) Purchase \n(3) Exit");
                 mainMenuSelection = Console.ReadLine();
 
+                //handle invalid user input
                 if (mainMenuSelection != "1" && mainMenuSelection != "2" && mainMenuSelection != "3")
                 {
                     Console.WriteLine("\nYou entered an invalid code, please try again!\n");
                 }
 
-                //menu selection to display inventory to user 
+                //menu selection "1" to display full inventory to user 
                 if (mainMenuSelection == "1")
                 {
                     DisplayAvaliableInvetory();
                     Console.Write("\n Press any key to return to main menu: ");
                     Console.ReadLine();
                 }
-                //menu selection to take user to purchasing menu
+                //menu selection "2" to take user to purchasing menu
                 if (mainMenuSelection == "2")
                 {
                     PurchaseMenu();
                 }
-                //menu selection to leave program
+                //menu selection "3" to leave program
                 if (mainMenuSelection == "3")
                 {
                     break;
@@ -93,6 +96,7 @@ namespace Capstone
                 Console.WriteLine($"\nCurrent Money Provided: {MachineBalance:c2}");
                 string purchaseMenuSelection = Console.ReadLine();
 
+                //handle invalid user input
                 if (purchaseMenuSelection != "1" && purchaseMenuSelection != "2" && purchaseMenuSelection != "3")
                 {
                     Console.WriteLine("\nYou entered an invalid code, please try again!\n");
@@ -122,7 +126,7 @@ namespace Capstone
 
         public void FeedMoney()
         {
-            //prompt user for whole dollar amount, then update current machine balance
+            //prompt user for whole dollar amount to deposit
             Console.Write("\nPlease enter the whole dollar amount you would like to deposit: ");
 
             //accept money from user 
@@ -130,30 +134,31 @@ namespace Capstone
             //add deposited amount to machine balance
             MachineBalance += depositAmount;
 
-            //TODO: LOG ENTERED MONEY
-
             //write to file log for machine 
             string logFeedMoney = $"{timeStamp} FEED MONEY: {depositAmount:c2} {MachineBalance:c2}";
             fileLogWriter.WriteLogMessage(logFeedMoney);
         }
         public void DispenseItem()
         {
+            //display inventory to user
             DisplayAvaliableInvetory();
+            
+            //prompt user for item code and accept input
             Console.Write("\nEnter the code of the product you want to purchase:");
             string selectedItemCode = Console.ReadLine();
 
             //check on item avaliabilty and update inventory 
             if (VendingMachineDictionary.ContainsKey(selectedItemCode))
             {
-                //VendingMachineDictionary[selectedItemCode].ItemQuantity; -this needs to be set to property
                 VendingMachineItem item = VendingMachineDictionary[selectedItemCode];
                 if (item.ItemQuantity >= 1)
                 {
+                    //create a current machine balance for manipulating later
                     decimal currentMachineBalance = MachineBalance;
                     //update machine balance after purchasing item
                     MachineBalance -= item.ItemCost;
 
-                    //print slogan of selected item
+                    //print slogan of selected vending machine item
                     string slogan = "";
                     if (item.ItemCategory == "Chip")
                     {

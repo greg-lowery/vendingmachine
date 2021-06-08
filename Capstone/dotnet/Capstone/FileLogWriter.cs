@@ -5,7 +5,7 @@ using System.IO;
 
 namespace Capstone
 {
-    class FileLogWriter
+    public class FileLogWriter
     {
         private string whereToWrite = "";
         public FileLogWriter()

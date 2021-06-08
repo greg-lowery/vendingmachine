@@ -4,7 +4,7 @@ using System.IO;
 
 namespace Capstone
 {
-    class InventoryRead 
+    public class InventoryRead 
     {
 
          
