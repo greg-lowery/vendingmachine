@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using System.IO;
 
 namespace Capstone
@@ -25,9 +24,6 @@ namespace Capstone
             //file to be read of inventory list 
             string currentDirectory = Environment.CurrentDirectory;
             string whereToRead = Path.Combine(currentDirectory, "vendingmachine.csv");
-
-            //create new file to write to
-            FileLogWriter writeLogFile = new FileLogWriter();
 
             //create new instance of inventory read class
             InventoryRead inventoryRead = new InventoryRead();
@@ -161,7 +157,7 @@ namespace Capstone
             Console.Write("\nEnter the code of the product you want to purchase:");
             string selectedItemCode = Console.ReadLine();
 
-            //check on item avaliabilty and update inventory 
+            //check if the dictionary contains the item code that the user selected
             if (VendingMachineDictionary.ContainsKey(selectedItemCode))
             {
                 VendingMachineItem item = VendingMachineDictionary[selectedItemCode];

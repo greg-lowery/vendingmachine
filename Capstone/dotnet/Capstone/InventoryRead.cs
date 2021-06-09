@@ -8,7 +8,7 @@ namespace Capstone
     {
 
          
-        //this will read from the inventory file and let us instantiate an item base on that particular line of the file read for the vendingmachine.csv
+        //this will read from the inventory file and let us instantiate a dictionary with key = the item code and value = relevant properties of that item
 
         public Dictionary<string, VendingMachineItem> ReadFile(string whereToRead)
         {
@@ -51,8 +51,5 @@ namespace Capstone
 
             return vendingMachineDictionary;
         }
-
-
-
     }
 }

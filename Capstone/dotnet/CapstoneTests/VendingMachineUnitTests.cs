@@ -27,14 +27,14 @@ namespace CapstoneTests
             Assert.AreEqual(result, TestMethods.FinishTransactionTestMethod(currentMachineBalance));
         }
 
-        [TestMethod]
-        public void TestDisplayMainMenuOptionInvalidEntry()
-        {
-            string result = "\nYou entered an invalid code, please try again!\n";
+    //    [TestMethod]
+    //    public void TestDisplayMainMenuOptionInvalidEntry()
+    //    {
+    //        string result = "\nYou entered an invalid code, please try again!\n";
 
-           string mainMenuSelectionTest = "5";
+    //       string mainMenuSelectionTest = "5";
 
-            Assert.AreEqual(result, TestMethods.DisplayMainMenuTestMethod(mainMenuSelectionTest));
-        }
+    //        Assert.AreEqual(result, TestMethods.DisplayMainMenuTestMethod(mainMenuSelectionTest));
+    //    }
     }
 }
