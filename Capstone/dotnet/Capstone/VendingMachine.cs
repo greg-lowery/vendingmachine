@@ -128,15 +128,29 @@ namespace Capstone
         {
             //prompt user for whole dollar amount to deposit
             Console.Write("\nPlease enter the whole dollar amount you would like to deposit: ");
+            string userDepositAmount = Console.ReadLine();
 
-            //accept money from user 
-            decimal depositAmount = decimal.Parse(Console.ReadLine());
-            //add deposited amount to machine balance
-            MachineBalance += depositAmount;
+            //verify that user has entered a valid amount
+            char firstChar = userDepositAmount[0];
+            bool isInteger = char.IsDigit(firstChar);
+            
+            if (!isInteger || int.Parse(userDepositAmount) <= 0)
+            {
+                Console.WriteLine("Invalid Currency Deposited. Please Deposit Whole Dollar Amounts Only.");
+            }
 
-            //write to file log for machine 
-            string logFeedMoney = $"{timeStamp} FEED MONEY: {depositAmount:c2} {MachineBalance:c2}";
-            fileLogWriter.WriteLogMessage(logFeedMoney);
+            //proceed with transaction if valid
+            else
+            {
+                decimal depositAmount = decimal.Parse(userDepositAmount);
+
+                //add deposited amount to machine balance
+                MachineBalance += depositAmount;
+
+                //write to file log for machine 
+                string logFeedMoney = $"{timeStamp} FEED MONEY: {depositAmount:c2} {MachineBalance:c2}";
+                fileLogWriter.WriteLogMessage(logFeedMoney);
+            }
         }
         public void DispenseItem()
         {
@@ -155,37 +169,48 @@ namespace Capstone
                 {
                     //create a current machine balance for manipulating later
                     decimal currentMachineBalance = MachineBalance;
-                    //update machine balance after purchasing item
-                    MachineBalance -= item.ItemCost;
 
-                    //print slogan of selected vending machine item
-                    string slogan = "";
-                    if (item.ItemCategory == "Chip")
+                    //make sure user has sufficient funds for item, else throw error message
+                    if (MachineBalance > item.ItemCost)
                     {
-                        slogan = "Crunch Crunch, Yum!";
+
+                        //update machine balance after purchasing item
+                        MachineBalance -= item.ItemCost;
+
+                        //print slogan of selected vending machine item
+                        string slogan = "";
+                        if (item.ItemCategory == "Chip")
+                        {
+                            slogan = "Crunch Crunch, Yum!";
+                        }
+                        else if (item.ItemCategory == "Candy")
+                        {
+                            slogan = "Munch Munch, Yum!";
+                        }
+                        else if (item.ItemCategory == "Drink")
+                        {
+                            slogan = "Glug Glug, Yum!";
+                        }
+                        else if (item.ItemCategory == "Gum")
+                        {
+                            slogan = "Chew Chew, Yum!";
+                        }
+
+                        //print reciept to user
+                        Console.WriteLine($"\nYou selected: {item.ItemName} \nCost of item: {item.ItemCost:c2} \nYour remaining balance: {MachineBalance:c2}  \n{slogan}");
+
+                        //update item inventory by subtracting selected item from group
+                        item.ItemQuantity--;
+
+                        //WRITE TO THE LOG
+                        string logItemPurchased = $"{timeStamp} {item.ItemName} {item.ItemCode} {currentMachineBalance:c2} {MachineBalance:c2}";
+                        fileLogWriter.WriteLogMessage(logItemPurchased);
                     }
-                    else if (item.ItemCategory == "Candy")
+                    else
                     {
-                        slogan = "Munch Munch, Yum!";
-                    }
-                    else if (item.ItemCategory == "Drink")
-                    {
-                        slogan = "Glug Glug, Yum!";
-                    }
-                    else if (item.ItemCategory == "Gum")
-                    {
-                        slogan = "Chew Chew, Yum!";
+                        Console.WriteLine("\nInsufficient Funds - Please Deposit More Money.");
                     }
 
-                    //print reciept to user
-                    Console.WriteLine($"\nYou selected: {item.ItemName} \nCost of item: {item.ItemCost:c2} \nYour remaining balance: {MachineBalance:c2}  \n{slogan}");
-
-                    //update item inventory by subtracting selected item from group
-                    item.ItemQuantity--;
-
-                    //WRITE TO THE LOG
-                    string logItemPurchased = $"{timeStamp} {item.ItemName} {item.ItemCode} {currentMachineBalance:c2} {MachineBalance:c2}";
-                    fileLogWriter.WriteLogMessage(logItemPurchased);
                 }
                 else
                 {

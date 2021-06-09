@@ -26,5 +26,15 @@ namespace CapstoneTests
             decimal currentMachineBalance = 6.40M;
             Assert.AreEqual(result, TestMethods.FinishTransactionTestMethod(currentMachineBalance));
         }
+
+        [TestMethod]
+        public void TestDisplayMainMenuOptionInvalidEntry()
+        {
+            string result = "\nYou entered an invalid code, please try again!\n";
+
+           string mainMenuSelectionTest = "5";
+
+            Assert.AreEqual(result, TestMethods.DisplayMainMenuTestMethod(mainMenuSelectionTest));
+        }
     }
 }

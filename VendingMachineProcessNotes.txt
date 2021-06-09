@@ -23,20 +23,22 @@ purchase.finishtransaction(main menu 2)
 finish transaction (main menu 3)
 
 
-		PROCESS NOTES 6-4-21
+					PROCESS NOTES 6-4-21
 
---**Insufficient funds**
---**other than whole dollar selection**
 
 --formatting stuff
 	variable names, method names, class names
+		-variables are nouns, methods are verbs, class names are nouns
 	make sure the output looks clean
 	commenting
 	exception catching in file I/O
 	make user input case insensitive
 
---optional 4th hidden main menu item, Sales Report
+--optional 4th hidden main menu item, Sales Report 
 
+
+--**Insufficient funds**			DONE
+--**other than whole dollar selection** 	DONE
 
 --create at least one unit test for this program		DONE
 	since our methods are void, use cw() in the test variables?
