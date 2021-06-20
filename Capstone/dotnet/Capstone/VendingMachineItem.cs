@@ -7,18 +7,16 @@ namespace Capstone
 
         public decimal ItemCost { get; private set; }
 
-        public string ItemCode { get; private set; }
-
         public string ItemCategory { get; private set; }
 
-        public int ItemQuantity { get; set; } = 5;
+        public int ItemQuantity { get; set; }
 
+        // abstract method for itemSound that inherits from base class VendingMachineItem??
 
-        public VendingMachineItem(string itemName, decimal itemCost, string itemCode, string itemCategory, int itemQuantity)
+        public VendingMachineItem(string itemName, decimal itemCost, string itemCategory, int itemQuantity)
         {
             ItemName = itemName;
             ItemCost = itemCost;
-            ItemCode = itemCode;
             ItemCategory = itemCategory;
             ItemQuantity = itemQuantity;
         }

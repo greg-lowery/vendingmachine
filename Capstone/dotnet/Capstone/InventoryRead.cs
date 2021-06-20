@@ -21,6 +21,7 @@ namespace Capstone
                     {
 
                         string line = sr.ReadLine();
+
                         //seperate items into array to be read
                         string[] separatedItem = line.Split("|");
 
@@ -34,7 +35,7 @@ namespace Capstone
 
                         int itemQuantity = 5;
 
-                        VendingMachineItem vendingMachineItem = new VendingMachineItem(itemName, itemCost, itemCode, itemCategory, itemQuantity);
+                        VendingMachineItem vendingMachineItem = new VendingMachineItem(itemName, itemCost, itemCategory, itemQuantity);
 
                         vendingMachineDictionary[itemCode] = vendingMachineItem;
 

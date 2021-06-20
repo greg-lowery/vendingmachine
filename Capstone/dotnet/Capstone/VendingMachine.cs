@@ -28,12 +28,12 @@ namespace Capstone
             //create new instance of inventory read class
             InventoryRead inventoryRead = new InventoryRead();
 
-            //create new dictionary using invetoryReaed method to populate
+            //create new dictionary using inventoryRead method to populate
             VendingMachineDictionary = inventoryRead.ReadFile(whereToRead);
         }
 
         //method for displaying the inventory from the vending machine dictionary
-        public void DisplayAvaliableInvetory()
+        public void DisplayAvailableInvetory()
         {
             foreach (KeyValuePair<string, VendingMachineItem> item in VendingMachineDictionary)
             {
@@ -46,7 +46,8 @@ namespace Capstone
         {
 
             string mainMenuSelection = "";
-            do
+
+            while (mainMenuSelection != "3") 
             {
                 //display main menu options for user to select
                 Console.WriteLine("(1) Display Vending Machine Items \n(2) Purchase \n(3) Exit");
@@ -61,7 +62,7 @@ namespace Capstone
                 //menu selection "1" to display full inventory to user 
                 if (mainMenuSelection == "1")
                 {
-                    DisplayAvaliableInvetory();
+                    DisplayAvailableInvetory();
                     Console.Write("\n Press any key to return to main menu: ");
                     Console.ReadLine();
                 }
@@ -70,6 +71,7 @@ namespace Capstone
                 {
                     PurchaseMenu();
                 }
+
                 //menu selection "3" to leave program
                 if (mainMenuSelection == "3")
                 {
@@ -78,7 +80,7 @@ namespace Capstone
                 //TODO: PRINT SALES REPORT
                 //if (mainMenuSelection = 4)
 
-            } while (mainMenuSelection != "3");
+            } 
         }
 
         public void PurchaseMenu()
@@ -123,20 +125,11 @@ namespace Capstone
         public void FeedMoney()
         {
             //prompt user for whole dollar amount to deposit
-            Console.Write("\nPlease enter the whole dollar amount you would like to deposit: ");
+            Console.Write("\nPlease enter the whole dollar amount you would like to deposit $(1, 2, 5, 10, or 20): ");
             string userDepositAmount = Console.ReadLine();
-
-            //verify that user has entered a valid amount
-            char firstChar = userDepositAmount[0];
-            bool isInteger = char.IsDigit(firstChar);
             
-            if (!isInteger || int.Parse(userDepositAmount) <= 0)
-            {
-                Console.WriteLine("Invalid Currency Deposited. Please Deposit Whole Dollar Amounts Only.");
-            }
-
-            //proceed with transaction if valid
-            else
+            //accept only  1, 2, 5, 10, 20 as a valid deposit amount
+            if (userDepositAmount == "1" || userDepositAmount == "2" || userDepositAmount == "5" || userDepositAmount == "10" || userDepositAmount == "20")
             {
                 decimal depositAmount = decimal.Parse(userDepositAmount);
 
@@ -147,15 +140,22 @@ namespace Capstone
                 string logFeedMoney = $"{timeStamp} FEED MONEY: {depositAmount:c2} {MachineBalance:c2}";
                 fileLogWriter.WriteLogMessage(logFeedMoney);
             }
+
+            //throw error message if currency deposit is invalid
+            else
+            {
+                Console.WriteLine("\nInvalid Currency Deposited. Please Deposit Whole Dollar Amounts Only.");
+            }
+            
         }
         public void DispenseItem()
         {
             //display inventory to user
-            DisplayAvaliableInvetory();
+            DisplayAvailableInvetory();
             
             //prompt user for item code and accept input
             Console.Write("\nEnter the code of the product you want to purchase:");
-            string selectedItemCode = Console.ReadLine();
+            string selectedItemCode = Console.ReadLine().ToUpper();
 
             //check if the dictionary contains the item code that the user selected
             if (VendingMachineDictionary.ContainsKey(selectedItemCode))
@@ -199,7 +199,7 @@ namespace Capstone
                         item.ItemQuantity--;
 
                         //WRITE TO THE LOG
-                        string logItemPurchased = $"{timeStamp} {item.ItemName} {item.ItemCode} {currentMachineBalance:c2} {MachineBalance:c2}";
+                        string logItemPurchased = $"{timeStamp} {item.ItemName} {VendingMachineDictionary[selectedItemCode]} {currentMachineBalance:c2} {MachineBalance:c2}";
                         fileLogWriter.WriteLogMessage(logItemPurchased);
                     }
                     else
@@ -221,6 +221,19 @@ namespace Capstone
         public void FinishTransaction()
         {
             decimal currentMachineBalance = MachineBalance;
+
+            GiveChange();
+
+            //update machine balance to $0
+            MachineBalance = 0;
+
+            //WRITE TO LOG
+            string logChangeGiven = $"{timeStamp} GIVE CHANGE: {currentMachineBalance:c2} {MachineBalance:c2}";
+            fileLogWriter.WriteLogMessage(logChangeGiven);
+        }
+
+        public void GiveChange()
+        {
             //return customer change in largest coins possible and print change amount to console 
             int coinChange = (int)(MachineBalance * 100);
             int quarter = coinChange / 25;
@@ -232,14 +245,6 @@ namespace Capstone
 
             //write to user change expected in quarters, nickles, dimes
             Console.WriteLine($"\nAmount of change: {MachineBalance:c2} \nquarters: {quarter} \ndimes: {dime} \nnickels: {nickel}\n");
-
-            
-            //update machine balance to $0
-            MachineBalance = 0;
-
-            //WRITE TO LOG
-            string logChangeGiven = $"{timeStamp} GIVE CHANGE: {currentMachineBalance:c2} {MachineBalance:c2}";
-            fileLogWriter.WriteLogMessage(logChangeGiven);
         }
     }
 }
